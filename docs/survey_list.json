@@ -1,0 +1,410 @@
+[
+  {
+    "title": "Phiếu khảo sát về môn học - Học kỳ 2, năm 2024-2025",
+    "sid": "871292",
+    "type": "LT",
+    "semester_type": "HK2",
+    "year": "2024-2025",
+    "semester_name": "HK2, 2024-2025"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 1 - Học kỳ 2, năm học 2024-2025",
+    "sid": "418681",
+    "type": "HT1",
+    "semester_type": "HK2",
+    "year": "2024-2025",
+    "semester_name": "HK2, 2024-2025"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 2 - Học kỳ 2, năm học 2024-2025",
+    "sid": "576827",
+    "type": "HT2",
+    "semester_type": "HK2",
+    "year": "2024-2025",
+    "semester_name": "HK2, 2024-2025"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học - Học kỳ 1, năm 2024-2025",
+    "sid": "482311",
+    "type": "LT",
+    "semester_type": "HK1",
+    "year": "2024-2025",
+    "semester_name": "HK1, 2024-2025"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 1 - Học kỳ 1, năm học 2024-2025",
+    "sid": "476768",
+    "type": "HT1",
+    "semester_type": "HK1",
+    "year": "2024-2025",
+    "semester_name": "HK1, 2024-2025"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 2 - Học kỳ 1, năm học 2024-2025",
+    "sid": "988287",
+    "type": "HT2",
+    "semester_type": "HK1",
+    "year": "2024-2025",
+    "semester_name": "HK1, 2024-2025"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học - Học kỳ 2, năm 2023-2024",
+    "sid": "449416",
+    "type": "LT",
+    "semester_type": "HK2",
+    "year": "2023-2024",
+    "semester_name": "HK2, 2023-2024"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 1 - Học kỳ 2, năm học 2023-2024",
+    "sid": "688552",
+    "type": "HT1",
+    "semester_type": "HK2",
+    "year": "2023-2024",
+    "semester_name": "HK2, 2023-2024"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 2 - Học kỳ 2, năm học 2023-2024",
+    "sid": "831799",
+    "type": "HT2",
+    "semester_type": "HK2",
+    "year": "2023-2024",
+    "semester_name": "HK2, 2023-2024"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học - Học kỳ 1, năm 2023-2024",
+    "sid": "719159",
+    "type": "LT",
+    "semester_type": "HK1",
+    "year": "2023-2024",
+    "semester_name": "HK1, 2023-2024"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 1 - Học kỳ 1, năm học 2023-2024",
+    "sid": "454771",
+    "type": "HT1",
+    "semester_type": "HK1",
+    "year": "2023-2024",
+    "semester_name": "HK1, 2023-2024"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 2 - Học kỳ 1, năm học 2023-2024",
+    "sid": "729111",
+    "type": "HT2",
+    "semester_type": "HK1",
+    "year": "2023-2024",
+    "semester_name": "HK1, 2023-2024"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học - Học kỳ 2, năm 2022-2023",
+    "sid": "616785",
+    "type": "LT",
+    "semester_type": "HK2",
+    "year": "2022-2023",
+    "semester_name": "HK2, 2022-2023"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 1 - Học kỳ 2, năm học 2022-2023",
+    "sid": "795959",
+    "type": "HT1",
+    "semester_type": "HK2",
+    "year": "2022-2023",
+    "semester_name": "HK2, 2022-2023"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 2 - Học kỳ 2, năm học 2022-2023",
+    "sid": "248549",
+    "type": "HT2",
+    "semester_type": "HK2",
+    "year": "2022-2023",
+    "semester_name": "HK2, 2022-2023"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học - Học kỳ 1, năm 2022-2023",
+    "sid": "644157",
+    "type": "LT",
+    "semester_type": "HK1",
+    "year": "2022-2023",
+    "semester_name": "HK1, 2022-2023"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 1 - Học kỳ 1, năm học 2022-2023",
+    "sid": "957896",
+    "type": "HT1",
+    "semester_type": "HK1",
+    "year": "2022-2023",
+    "semester_name": "HK1, 2022-2023"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 2 - Học kỳ 1, năm học 2022-2023",
+    "sid": "337417",
+    "type": "HT2",
+    "semester_type": "HK1",
+    "year": "2022-2023",
+    "semester_name": "HK1, 2022-2023"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học - Học kỳ 2, năm 2021-2022",
+    "sid": "788469",
+    "type": "LT",
+    "semester_type": "HK2",
+    "year": "2021-2022",
+    "semester_name": "HK2, 2021-2022"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 1 - Học kỳ 2, năm học 2021-2022",
+    "sid": "927714",
+    "type": "HT1",
+    "semester_type": "HK2",
+    "year": "2021-2022",
+    "semester_name": "HK2, 2021-2022"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 2 - Học kỳ 2, năm học 2021-2022",
+    "sid": "859626",
+    "type": "HT2",
+    "semester_type": "HK2",
+    "year": "2021-2022",
+    "semester_name": "HK2, 2021-2022"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học - Học kỳ 1, năm 2020-2021",
+    "sid": "838437",
+    "type": "LT",
+    "semester_type": "HK1",
+    "year": "2020-2021",
+    "semester_name": "HK1, 2020-2021"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 1 - Học kỳ 1, năm học 2020-2021",
+    "sid": "759782",
+    "type": "HT1",
+    "semester_type": "HK1",
+    "year": "2020-2021",
+    "semester_name": "HK1, 2020-2021"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 2 - Học kỳ 1, năm học 2020-2021",
+    "sid": "991725",
+    "type": "HT2",
+    "semester_type": "HK1",
+    "year": "2020-2021",
+    "semester_name": "HK1, 2020-2021"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học - Học kỳ 1, năm 2019-2020",
+    "sid": "458449",
+    "type": "LT",
+    "semester_type": "HK1",
+    "year": "2019-2020",
+    "semester_name": "HK1, 2019-2020"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 1 - Học kỳ 1, năm học 2019-2020",
+    "sid": "734415",
+    "type": "HT1",
+    "semester_type": "HK1",
+    "year": "2019-2020",
+    "semester_name": "HK1, 2019-2020"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 2 - Học kỳ 1, năm học 2019-2020",
+    "sid": "413246",
+    "type": "HT2",
+    "semester_type": "HK1",
+    "year": "2019-2020",
+    "semester_name": "HK1, 2019-2020"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học - Học kỳ 2, năm 2018-2019",
+    "sid": "487729",
+    "type": "LT",
+    "semester_type": "HK2",
+    "year": "2018-2019",
+    "semester_name": "HK2, 2018-2019"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 1 - Học kỳ 2, năm học 2018-2019",
+    "sid": "475541",
+    "type": "HT1",
+    "semester_type": "HK2",
+    "year": "2018-2019",
+    "semester_name": "HK2, 2018-2019"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 2 - Học kỳ 2, năm học 2018-2019",
+    "sid": "177898",
+    "type": "HT2",
+    "semester_type": "HK2",
+    "year": "2018-2019",
+    "semester_name": "HK2, 2018-2019"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học - Học kỳ 1, năm 2018-2019",
+    "sid": "195668",
+    "type": "LT",
+    "semester_type": "HK1",
+    "year": "2018-2019",
+    "semester_name": "HK1, 2018-2019"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 1 - Học kỳ 1, năm học 2018-2019",
+    "sid": "798415",
+    "type": "HT1",
+    "semester_type": "HK1",
+    "year": "2018-2019",
+    "semester_name": "HK1, 2018-2019"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 2 - Học kỳ 1, năm học 2018-2019",
+    "sid": "945714",
+    "type": "HT2",
+    "semester_type": "HK1",
+    "year": "2018-2019",
+    "semester_name": "HK1, 2018-2019"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học - Học kỳ 2, năm 2017-2018",
+    "sid": "254874",
+    "type": "LT",
+    "semester_type": "HK2",
+    "year": "2017-2018",
+    "semester_name": "HK2, 2017-2018"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 1 - Học kỳ 2, năm học 2017-2018",
+    "sid": "569235",
+    "type": "HT1",
+    "semester_type": "HK2",
+    "year": "2017-2018",
+    "semester_name": "HK2, 2017-2018"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 2 - Học kỳ 2, năm học 2017-2018",
+    "sid": "978125",
+    "type": "HT2",
+    "semester_type": "HK2",
+    "year": "2017-2018",
+    "semester_name": "HK2, 2017-2018"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học - Học kỳ 1, năm 2017-2018",
+    "sid": "755968",
+    "type": "LT",
+    "semester_type": "HK1",
+    "year": "2017-2018",
+    "semester_name": "HK1, 2017-2018"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 1 - Học kỳ 1, năm học 2017-2018",
+    "sid": "536442",
+    "type": "HT1",
+    "semester_type": "HK1",
+    "year": "2017-2018",
+    "semester_name": "HK1, 2017-2018"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 2 - Học kỳ 1, năm học 2017-2018",
+    "sid": "557999",
+    "type": "HT2",
+    "semester_type": "HK1",
+    "year": "2017-2018",
+    "semester_name": "HK1, 2017-2018"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học - Học kỳ 2, năm 2016-2017",
+    "sid": "849397",
+    "type": "LT",
+    "semester_type": "HK2",
+    "year": "2016-2017",
+    "semester_name": "HK2, 2016-2017"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 1 - Học kỳ 2, năm học 2016-2017",
+    "sid": "748463",
+    "type": "HT1",
+    "semester_type": "HK2",
+    "year": "2016-2017",
+    "semester_name": "HK2, 2016-2017"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 2 - Học kỳ 2, năm học 2016-2017",
+    "sid": "639937",
+    "type": "HT2",
+    "semester_type": "HK2",
+    "year": "2016-2017",
+    "semester_name": "HK2, 2016-2017"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học - Học kỳ 1, năm 2016-2017",
+    "sid": "361657",
+    "type": "LT",
+    "semester_type": "HK1",
+    "year": "2016-2017",
+    "semester_name": "HK1, 2016-2017"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 1 - Học kỳ 1, năm học 2016-2017",
+    "sid": "822249",
+    "type": "HT1",
+    "semester_type": "HK1",
+    "year": "2016-2017",
+    "semester_name": "HK1, 2016-2017"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 2 - Học kỳ 1, năm học 2016-2017 ",
+    "sid": "127941",
+    "type": "HT2",
+    "semester_type": "HK1",
+    "year": "2016-2017",
+    "semester_name": "HK1, 2016-2017"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học - Học kỳ 2, năm 2015-2016",
+    "sid": "935796",
+    "type": "LT",
+    "semester_type": "HK2",
+    "year": "2015-2016",
+    "semester_name": "HK2, 2015-2016"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 1 - Học kỳ 2, năm học 2015-2016",
+    "sid": "395227",
+    "type": "HT1",
+    "semester_type": "HK2",
+    "year": "2015-2016",
+    "semester_name": "HK2, 2015-2016"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 2 - Học kỳ 2, năm học 2015-2016",
+    "sid": "486157",
+    "type": "HT2",
+    "semester_type": "HK2",
+    "year": "2015-2016",
+    "semester_name": "HK2, 2015-2016"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học - Học kỳ 1, năm 2015-2016",
+    "sid": "679919",
+    "type": "LT",
+    "semester_type": "HK1",
+    "year": "2015-2016",
+    "semester_name": "HK1, 2015-2016"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 1 - Học kỳ 1, năm học 2015-2016",
+    "sid": "764837",
+    "type": "HT1",
+    "semester_type": "HK1",
+    "year": "2015-2016",
+    "semester_name": "HK1, 2015-2016"
+  },
+  {
+    "title": "Phiếu khảo sát về môn học thực hành theo phương thức 2 - Học kỳ 1, năm học 2015-2016",
+    "sid": "215697",
+    "type": "HT2",
+    "semester_type": "HK1",
+    "year": "2015-2016",
+    "semester_name": "HK1, 2015-2016"
+  }
+]

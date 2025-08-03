@@ -1,0 +1,35 @@
+{
+    "name": "aqa-survey-crawler",
+    "version": "1.0.0",
+    "description": "Survey data crawler and database storage system",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js",
+        "crawl": "node index.js",
+        "crawl-all": "node crawl-all.js",
+        "crawl-list": "node crawl-all.js --list",
+        "aggregate": "node aggregate-points.js",
+        "stats": "node aggregate-points.js --stats",
+        "cleanup": "node cleanup.js",
+        "clear": "node cleanup.js",
+        "status": "node status.js"
+    },
+    "dependencies": {
+        "axios": "^1.6.2",
+        "dotenv": "^16.3.1",
+        "pg": "^8.16.3",
+        "uuid": "^11.1.0"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.2"
+    },
+    "keywords": [
+        "survey",
+        "crawler",
+        "database",
+        "api"
+    ],
+    "author": "",
+    "license": "MIT"
+}

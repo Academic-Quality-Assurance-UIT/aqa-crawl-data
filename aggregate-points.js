@@ -77,6 +77,18 @@ class PointAggregator {
 						row.avg_point,
 					]);
 
+					// Update participating_student count in class table
+					const updateClassQuery = `
+                    UPDATE class 
+                    SET participating_student = $1 
+                    WHERE class_id = $2
+                `;
+
+					await this.db.executeQuery(updateClassQuery, [
+						row.answer_count,
+						row.class_id,
+					]);
+
 					// Check if it was an insert or update
 					if (result[0].is_insert) {
 						insertedCount++;

@@ -5,6 +5,14 @@
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+-- Create enum types
+CREATE TYPE IF NOT EXISTS public.user_entity_role_enum AS ENUM (
+    'LECTURER',
+    'FACULTY',
+    'FULL_ACCESS',
+    'ADMIN'
+);
+
 -- Create tables in the correct order
 
 CREATE TABLE IF NOT EXISTS semester (
@@ -35,7 +43,19 @@ CREATE TABLE IF NOT EXISTS subject (
 CREATE TABLE IF NOT EXISTS lecturer (
     lecturer_id VARCHAR(255) DEFAULT uuid_generate_v4() PRIMARY KEY,
     display_name VARCHAR(255) NOT NULL UNIQUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    mscb VARCHAR NULL,
+    faculty_id VARCHAR NULL,
+    username VARCHAR NULL,
+    learning_position VARCHAR NULL,
+    birth_date TIMESTAMP NULL,
+    gender BOOLEAN NULL,
+    learning VARCHAR NULL,
+    email VARCHAR NULL,
+    phone VARCHAR NULL,
+    ngach VARCHAR NULL,
+    position VARCHAR NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (faculty_id) REFERENCES faculty(faculty_id)
 );
 
 CREATE TABLE IF NOT EXISTS criteria (
@@ -101,6 +121,20 @@ CREATE TABLE IF NOT EXISTS comment (
     class_id VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (class_id) REFERENCES class(class_id)
+);
+
+CREATE TABLE IF NOT EXISTS user_entity (
+    username character varying NOT NULL,
+    password character varying NOT NULL,
+    "displayName" character varying DEFAULT ''::character varying,
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL PRIMARY KEY,
+    role public.user_entity_role_enum NOT NULL,
+    "facultyFacultyId" character varying,
+    "lastAccess" timestamp with time zone DEFAULT '2025-07-11 03:12:23.342+00'::timestamp with time zone,
+    "lecturerLecturerId" character varying,
+    "lastSendEmail" timestamp with time zone DEFAULT '2025-07-11 03:12:23.342+00'::timestamp with time zone,
+    FOREIGN KEY ("facultyFacultyId") REFERENCES faculty(faculty_id),
+    FOREIGN KEY ("lecturerLecturerId") REFERENCES lecturer(lecturer_id)
 );
 
 -- Create indexes

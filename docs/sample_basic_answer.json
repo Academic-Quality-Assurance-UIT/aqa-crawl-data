@@ -1,0 +1,50 @@
+{
+    "success": true,
+    "sid": 871292,
+    "title": "Phiếu khảo sát về môn học - Học kỳ 2, năm 2024-2025",
+    "data": [
+        {
+            "tid": "6",
+            "firstname": " Hiếu",
+            "lastname": "Trần Minh",
+            "email": "18520281@gm.uit.edu.vn",
+            "token": "snihn2q8vg6wuvz",
+            "completed": "2025-06-13 08:15",
+            "usesleft": "0",
+            "validfrom": null,
+            "validuntil": null,
+            "attribute_1": "18520281",
+            "attribute_2": "HTTT",
+            "attribute_3": "13",
+            "attribute_4": "CQUI",
+            "attribute_5": "IT002.P212",
+            "attribute_6": "80477",
+            "attribute_7": "Trần Thị Hồng Yến",
+            "attribute_8": "Lập trình hướng đối tượng",
+            "attribute_9": "CNPM",
+            "attribute_10": "D52480104",
+            "attribute_11": "Thương mại điện tử"
+        }
+    ],
+    "attributes": {
+        "attribute_1": "MSSV",
+        "attribute_2": "Khoa",
+        "attribute_3": "K",
+        "attribute_4": "Hedt",
+        "attribute_5": "MaLop",
+        "attribute_6": "MaGV",
+        "attribute_7": "TenGV",
+        "attribute_8": "TenMH",
+        "attribute_9": "KhoaQL",
+        "attribute_10": "Nganh",
+        "attribute_11": "TenNganh"
+    },
+    "meta": {
+        "pagination": {
+            "page": 1,
+            "pageSize": 2,
+            "pageCount": 12056,
+            "total": 24112
+        }
+    }
+}

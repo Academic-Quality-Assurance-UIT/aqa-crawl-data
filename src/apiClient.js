@@ -105,6 +105,101 @@ class ApiClient {
 			throw error;
 		}
 	}
+
+	async getAllSurveyDetail(sid, options = {}) {
+		try {
+			const { limit = 50 } = options;
+			const allData = [];
+			let page = 1;
+			let hasMorePages = true;
+
+			while (hasMorePages) {
+				const response = await this.getSurveyDetail(sid, { page, limit });
+
+				if (response.data && response.data.length > 0) {
+                    const attributes = Array.from(Object.entries(response.attributes || {}));
+                    const mappedData = response.data.map((item) => ({
+                        class_name: item[attributes.find(attr => attr[1] === 'MaLop')?.[0]],
+                        program: item[attributes.find(attr => attr[1] === 'Hedt')?.[0]],
+                    }))
+					allData.push(...mappedData);
+				}
+
+				// Check if there are more pages using pagination info
+				if (response.meta && response.meta.pagination) {
+					const { page: currentPage, pageCount } =
+						response.meta.pagination;
+					hasMorePages = currentPage < pageCount;
+					page++;
+
+					console.log(
+						`Survey detail page ${currentPage}/${pageCount} processed. Total records so far: ${allData.length}`
+					);
+				} else {
+					hasMorePages = false;
+				}
+
+				// Add a small delay to avoid overwhelming the server
+				if (hasMorePages) {
+					await new Promise((resolve) => setTimeout(resolve, 100));
+				}
+			}
+
+			console.log(
+				`Completed fetching all survey detail data. Total records: ${allData.length}`
+			);
+			return allData;
+		} catch (error) {
+			console.error(
+				`Error fetching all survey detail for SID: ${sid}:`,
+				error.message
+			);
+			throw error;
+		}
+	}
+
+	async getSurveyDetail(sid, options = {}) {
+		try {
+			const { page = 1, limit = 50 } = options;
+			console.log(
+				`Fetching survey detail for SID: ${sid}, Page: ${page}, Limit: ${limit}`
+			);
+
+			const response = await this.client.get("", {
+				params: {
+					action: "getSurveyDetail",
+					sid: sid,
+					page: page,
+					limit: limit,
+				},
+			});
+
+			console.log(`Survey detail response status: ${response.status}`);
+
+			if (response.data && response.data.success) {
+				return response.data;
+			} else if (response.data) {
+				console.log(
+					`Survey detail API response success field:`,
+					response.data.success
+				);
+				return response.data;
+			} else {
+				throw new Error(
+					`API returned no survey detail data for SID: ${sid}`
+				);
+			}
+		} catch (error) {
+			console.error(`Error fetching survey detail for SID: ${sid}:`);
+			console.error(`Error type: ${error.constructor.name}`);
+			console.error(`Error message: ${error.message}`);
+			if (error.response) {
+				console.error(`Response status: ${error.response.status}`);
+				console.error(`Response data:`, error.response.data);
+			}
+			throw error;
+		}
+	}
 }
 
 module.exports = ApiClient;

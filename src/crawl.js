@@ -24,10 +24,20 @@ class SurveyCrawler {
 			// Fetch all survey data
 			const surveyData = await this.apiClient.getAllSurveyAnswers(sid);
 
+			// Fetch all survey detail data with pagination
+			const surveyDetailData = await this.apiClient.getAllSurveyDetail(sid, {
+				limit: 50,
+			});
+
 			// Process each response
 			let processedCount = 0;
 			for (const responseData of surveyData) {
-				await this.processResponse(responseData, semesterId, surveyInfo);
+				await this.processResponse(
+					responseData,
+					semesterId,
+					surveyInfo,
+					surveyDetailData
+				);
 				processedCount++;
 
 				if (processedCount % 10 === 0) {
@@ -64,7 +74,12 @@ class SurveyCrawler {
 		}
 	}
 
-	async processResponse(responseData, semesterId = null, surveyInfo = null) {
+	async processResponse(
+		responseData,
+		semesterId = null,
+		surveyInfo = null,
+		surveyDetailData = []
+	) {
 		try {
 			// Extract basic info for this response
 			let facultyId = null;
@@ -73,11 +88,51 @@ class SurveyCrawler {
 			let classId = null;
 			let className = null;
 
+			// Extract basic information before the loop
+			const facultyData = this.findQuestionByCode(responseData, "nganhhoc");
+			if (facultyData && facultyData.value) {
+				facultyId = await this.db.insertOrGetId(
+					"faculty",
+					{
+						display_name: facultyData.value,
+						full_name: null,
+						is_displayed: true,
+					},
+					"display_name"
+				);
+			}
+
+			const subjectData = this.findQuestionByCode(responseData, "tenmh");
+			if (subjectData && subjectData.value) {
+				subjectId = await this.db.insertOrGetId(
+					"subject",
+					{
+						display_name: subjectData.value,
+						faculty_id: facultyId,
+					},
+					"display_name"
+				);
+			}
+
+			const lecturerData = this.findQuestionByCode(responseData, "tengv");
+			if (lecturerData && lecturerData.value) {
+				lecturerId = await this.db.insertOrGetId(
+					"lecturer",
+					{ display_name: lecturerData.value },
+					"display_name"
+				);
+			}
+
+			const classData = this.findQuestionByCode(responseData, "mamh");
+			if (classData && classData.value) {
+				className = classData.value;
+			}
+
 			const criteriaMap = new Map();
 			const pointAnswers = [];
 			const comments = [];
 
-			// First pass: extract all basic information without creating class yet
+			// Process criteria, points, and comments
 			for (const [questionId, questionData] of Object.entries(
 				responseData
 			)) {
@@ -92,40 +147,11 @@ class SurveyCrawler {
 					type,
 				} = questionData;
 
-				// Extract basic information
-				if (code === "nganhhoc" && value) {
-					facultyId = await this.db.insertOrGetId(
-						"faculty",
-						{
-							display_name: value,
-							full_name: null,
-							is_displayed: true,
-						},
-						"display_name"
-					);
-				}
-				if (code === "tenmh" && value) {
-					subjectId = await this.db.insertOrGetId(
-						"subject",
-						{
-							display_name: value,
-							faculty_id: facultyId,
-						},
-						"display_name"
-					);
-				}
-				if (code === "tengv" && value) {
-					lecturerId = await this.db.insertOrGetId(
-						"lecturer",
-						{ display_name: value },
-						"display_name"
-					);
-				}
-				if (code === "mamh" && value) {
-					className = value; // Store class name for later
+				// Process criteria and sub-questions (skip basic info codes as they're already processed)
+				if (["nganhhoc", "tenmh", "tengv", "mamh"].includes(code)) {
+					continue; // Skip basic info codes as they're already processed above
 				}
 
-				// Process criteria and sub-questions
 				if (sub_questions && Array.isArray(sub_questions) && type === "F") {
 					// For questions with sub-questions, don't save the parent question
 					for (const subQuestion of sub_questions) {
@@ -184,12 +210,23 @@ class SurveyCrawler {
 				}
 			}
 
-			// Second pass: create class record now that we have all the required IDs
+			// Create class record now that we have all the required IDs
 			if (className) {
-				const classData = {
+				// Search for program in surveyDetailData by matching class name (attribute_8)
+				let program = null;
+				if (surveyDetailData && surveyDetailData.length > 0) {
+					const matchingDetail = surveyDetailData.find(
+						(detail) => detail.class_name === className
+					);
+					if (matchingDetail) {
+						program = matchingDetail.program;
+					}
+				}
+
+				const classDataToSave = {
 					display_name: className,
 					semester_id: semesterId,
-					program: null,
+					program: program, // Use program found from survey detail data
 					class_type: surveyInfo ? surveyInfo.type : null,
 					subject_id: subjectId,
 					lecturer_id: lecturerId,
@@ -200,15 +237,16 @@ class SurveyCrawler {
 				console.log(`Creating class with data:`, {
 					display_name: className,
 					semester_id: semesterId,
+					program: program,
 					subject_id: subjectId,
 					lecturer_id: lecturerId,
 					class_type: surveyInfo ? surveyInfo.type : null,
 				});
 
-				classId = await this.db.insertOrGetClass(classData);
+				classId = await this.db.insertOrGetClass(classDataToSave);
 			}
 
-			// Third pass: save point answers and comments if we have class info
+			// Save point answers and comments if we have class info
 			if (classId) {
 				// Save point answers
 				for (const pointAnswer of pointAnswers) {
@@ -233,6 +271,19 @@ class SurveyCrawler {
 			console.error("Error processing response:", error);
 			throw error;
 		}
+	}
+
+	findQuestionByCode(responseData, targetCode) {
+		for (const [questionId, questionData] of Object.entries(responseData)) {
+			if (
+				questionData &&
+				typeof questionData === "object" &&
+				questionData.code === targetCode
+			) {
+				return questionData;
+			}
+		}
+		return null;
 	}
 
 	convertPointValue(value) {

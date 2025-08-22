@@ -13,7 +13,17 @@
         "stats": "node aggregate-points.js --stats",
         "cleanup": "node cleanup.js",
         "clear": "node cleanup.js",
-        "status": "node status.js"
+        "status": "node status.js",
+        "transfer": "node transfer-data-configurable.js --transfer",
+        "transfer-stats": "node transfer-data-configurable.js --stats",
+        "transfer-config": "node transfer-data-configurable.js --show-config",
+        "transfer-simple": "node transfer-data.js --all",
+        "transfer-entity": "node transfer-data-entity-based.js --all",
+        "transfer-entity-stats": "node transfer-data-entity-based.js --stats",
+        "transfer-entity-mapping": "node transfer-data-entity-based.js --mapping",
+        "transfer-help": "node transfer-data-configurable.js --help",
+        "test-db": "node test-connections.js",
+        "check-sizes": "node check-large-tables.js"
     },
     "dependencies": {
         "axios": "^1.6.2",

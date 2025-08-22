@@ -1,0 +1,73 @@
+{
+  "sourceDatabase": {
+    "host": "localhost",
+    "port": 5432,
+    "database": "aqa_survey",
+    "user": "aqa_user",
+    "password": "aqa_password"
+  },
+  "targetDatabase": {
+    "host": "localhost",
+    "port": 5433,
+    "database": "aqa",
+    "user": "postgres",
+    "password": "jnhbgvfc"
+  },
+  "transferOptions": {
+    "truncateBeforeInsert": true,
+    "batchSize": 20000,
+    "continueOnError": true
+  },
+  "tableFilters": {
+    "semester": {
+      "enabled": true,
+      "whereClause": "",
+      "comment": "Transfer all semesters"
+    },
+    "faculty": {
+      "enabled": true,
+      "whereClause": "",
+      "comment": "Transfer all faculties"
+    },
+    "subject": {
+      "enabled": true,
+      "whereClause": "",
+      "comment": "Transfer all subjects"
+    },
+    "lecturer": {
+      "enabled": true,
+      "whereClause": "",
+      "comment": "Transfer all lecturers"
+    },
+    "criteria": {
+      "enabled": true,
+      "whereClause": "",
+      "comment": "Transfer all criteria"
+    },
+    "class": {
+      "enabled": true,
+      "whereClause": "",
+      "comment": "Transfer all classes. Example filter: WHERE semester_id = 'specific_semester_id'"
+    },
+    "point_answer": {
+      "enabled": true,
+      "whereClause": "",
+      "comment": "Transfer all point answers"
+    },
+    "point": {
+      "enabled": true,
+      "whereClause": "",
+      "comment": "Transfer all aggregated points"
+    },
+    "comment": {
+      "enabled": true,
+      "whereClause": "",
+      "comment": "Transfer all comments"
+    },
+    "user_entity": {
+      "enabled": false,
+      "whereClause": "",
+      "comment": "Disabled by default for security. Enable if needed."
+    }
+  }
+}

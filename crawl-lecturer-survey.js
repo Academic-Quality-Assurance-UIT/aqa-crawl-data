@@ -2,11 +2,13 @@ require("dotenv").config();
 const fs = require("fs");
 const path = require("path");
 const SurveyCrawler = require("./src/crawl");
+const LecturerSurveyCrawler = require("./src/crawl-lecturer");
 
 class BulkSurveyCrawler {
 	constructor() {
 		this.crawler = new SurveyCrawler();
-		this.surveyListPath = path.join(__dirname, "docs", "survey_list_subject.json");
+		this.lecturerCrawler = new LecturerSurveyCrawler();
+		this.surveyListPath = path.join(__dirname, "docs", "survey_list_lecturer.json");
 	}
 
 	async crawlAllSurveys() {
@@ -37,7 +39,7 @@ class BulkSurveyCrawler {
 					console.log(`  🎯 Type: ${surveyInfo.type}`);
 
 					// Crawl the survey
-					await this.crawler.crawl(surveyInfo.sid, surveyInfo);
+					await this.lecturerCrawler.crawl(surveyInfo.sid, surveyInfo);
 
 					successCount++;
 					console.log(`  ✅ Success!`);

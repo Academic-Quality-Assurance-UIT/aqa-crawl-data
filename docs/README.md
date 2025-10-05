@@ -442,6 +442,8 @@ API trả về các mã lỗi HTTP chuẩn:
 - `S`: Short free text (Văn bản ngắn)
 - `N`: Numerical input (Số)
 - `Y`: Yes/No (Có/Không)
+- `Q`: Nhiều ô đánh giá bằng text
+- `F`: Ma trận 10 cột
 
 ## Lưu ý
 

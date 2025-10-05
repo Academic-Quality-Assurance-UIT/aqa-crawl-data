@@ -15,9 +15,6 @@ async function clearDatabase() {
 		console.log("🗑️  Deleting points...");
 		await db.executeQuery("DELETE FROM point");
 
-		console.log("🗑️  Deleting point answers...");
-		await db.executeQuery("DELETE FROM point_answer");
-
 		console.log("🗑️  Deleting classes...");
 		await db.executeQuery("DELETE FROM class");
 		console.log("🗑️  Deleting subjects...");
@@ -34,6 +31,49 @@ async function clearDatabase() {
 
 		console.log("🗑️  Deleting semesters...");
 		await db.executeQuery("DELETE FROM semester");
+
+		try {
+			console.log("🗑️  Deleting point answers...");
+			await db.executeQuery("DELETE FROM point_answer");
+		} catch (error) {
+			console.warn("⚠️  Skipping point_answer deletion (may not exist)");
+		}
+
+		try {
+			console.log("🗑️  Deleting staff survey batches...");
+			await db.executeQuery("DELETE FROM staff_survey_batch");
+		} catch (error) {
+			console.warn(
+				"⚠️  Skipping staff_survey_batch deletion (may not exist)"
+			);
+		}
+
+		try {
+			console.log("🗑️  Deleting staff survey criteria...");
+			await db.executeQuery("DELETE FROM staff_survey_criteria");
+		} catch (error) {
+			console.warn(
+				"⚠️  Skipping staff_survey_criteria deletion (may not exist)"
+			);
+		}
+
+		try {
+			console.log("🗑️  Deleting staff survey points...");
+			await db.executeQuery("DELETE FROM staff_survey_point");
+		} catch (error) {
+			console.warn(
+				"⚠️  Skipping staff_survey_point deletion (may not exist)"
+			);
+		}
+
+		try {
+			console.log("🗑️  Deleting staff survey sheets...");
+			await db.executeQuery("DELETE FROM staff_survey_sheet");
+		} catch (error) {
+			console.warn(
+				"⚠️  Skipping staff_survey_sheet deletion (may not exist)"
+			);
+		}
 
 		console.log("✅ Database cleanup completed successfully!");
 		console.log("📊 All tables are now empty.");

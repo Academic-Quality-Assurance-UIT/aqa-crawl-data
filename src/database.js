@@ -12,9 +12,9 @@ class DatabaseManager {
 			this.connection = new Client({
 				host: process.env.DB_HOST,
 				port: process.env.DB_PORT,
-				user: process.env.DB_USER,
+				user: process.env.DB_USERNAME,
 				password: process.env.DB_PASSWORD,
-				database: process.env.DB_NAME,
+				database: process.env.DB_DATABASE,
 			});
 
 			await this.connection.connect();
@@ -91,6 +91,10 @@ class DatabaseManager {
 			criteria: "criteria_id",
 			class: "class_id",
 			comment: "comment_id",
+			staff_survey_batch: "staff_survey_batch_id",
+			staff_survey_criteria: "staff_survey_criteria_id",
+			staff_survey_point: "staff_survey_point_id",
+			staff_survey_sheet: "staff_survey_sheet_id",
 		};
 		return idFieldMap[table] || "id";
 	}
@@ -202,6 +206,26 @@ class DatabaseManager {
 			return result[0].comment_id;
 		} catch (error) {
 			console.error("Error inserting comment:", error);
+			throw error;
+		}
+	}
+
+	async insertStaffSurveyPoint(data) {
+		try {
+			const insertQuery = `
+                INSERT INTO staff_survey_point (max_point, point, comment, staff_survey_criteria_id, staff_survey_sheet_id) 
+                VALUES ($1, $2, $3, $4, $5) RETURNING staff_survey_point_id
+            `;
+			const result = await this.executeQuery(insertQuery, [
+				data.max_point,
+				data.point,
+				data.comment,
+				data.staff_survey_criteria_id,
+				data.staff_survey_sheet_id,
+			]);
+			return result[0].id;
+		} catch (error) {
+			console.error("Error inserting staff survey point:", error);
 			throw error;
 		}
 	}

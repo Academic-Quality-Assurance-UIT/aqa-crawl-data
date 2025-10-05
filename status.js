@@ -17,9 +17,13 @@ async function checkDatabaseStatus() {
 			"subject",
 			"lecturer",
 			"class",
-			"point_answer",
 			"point",
 			"comment",
+			"staff_survey_batch",
+			"staff_survey_criteria",
+			"staff_survey_point",
+			"staff_survey_sheet",
+			// "point_answer", // Uncomment if this table exists
 		];
 		let totalRecords = 0;
 

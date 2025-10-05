@@ -8,6 +8,7 @@
         "dev": "nodemon index.js",
         "crawl": "node index.js",
         "crawl-all": "node crawl-all.js",
+        "crawl-lecturer": "node crawl-lecturer-survey.js",
         "crawl-list": "node crawl-all.js --list",
         "aggregate": "node aggregate-points.js",
         "stats": "node aggregate-points.js --stats",

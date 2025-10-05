@@ -2,143 +2,476 @@
 -- Connect to the database
 \c aqa_survey;
 
--- Enable UUID extension
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
 
--- Create enum types
-CREATE TYPE IF NOT EXISTS public.user_entity_role_enum AS ENUM (
+CREATE TYPE public.user_entity_role_enum AS ENUM (
     'LECTURER',
     'FACULTY',
     'FULL_ACCESS',
     'ADMIN'
 );
 
--- Create tables in the correct order
 
-CREATE TABLE IF NOT EXISTS semester (
-    semester_id VARCHAR(255) DEFAULT uuid_generate_v4() PRIMARY KEY,
-    display_name VARCHAR(255) NOT NULL,
-    type VARCHAR(50) NOT NULL,
-    year VARCHAR(50) NOT NULL,
-    search_string VARCHAR(255) NOT NULL UNIQUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: class; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.class (
+    class_id character varying NOT NULL,
+    display_name character varying NOT NULL,
+    semester_id character varying NOT NULL,
+    program character varying NOT NULL,
+    class_type character varying NOT NULL,
+    subject_id character varying NOT NULL,
+    lecturer_id character varying NOT NULL,
+    total_student integer NOT NULL,
+    participating_student integer NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS faculty (
-    faculty_id VARCHAR(255) DEFAULT uuid_generate_v4() PRIMARY KEY,
-    display_name VARCHAR(255) NOT NULL UNIQUE,
-    full_name TEXT,
-    is_displayed BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+--
+-- Name: comment; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.comment (
+    comment_id character varying NOT NULL,
+    content character varying NOT NULL,
+    type character varying NOT NULL,
+    class_id character varying
 );
 
-CREATE TABLE IF NOT EXISTS subject (
-    subject_id VARCHAR(255) DEFAULT uuid_generate_v4() PRIMARY KEY,
-    display_name VARCHAR(255) NOT NULL UNIQUE,
-    faculty_id VARCHAR(255),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (faculty_id) REFERENCES faculty(faculty_id)
+
+--
+-- Name: criteria; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.criteria (
+    criteria_id character varying NOT NULL,
+    display_name character varying NOT NULL,
+    index integer,
+    semester_id character varying
 );
 
-CREATE TABLE IF NOT EXISTS lecturer (
-    lecturer_id VARCHAR(255) DEFAULT uuid_generate_v4() PRIMARY KEY,
-    display_name VARCHAR(255) NOT NULL UNIQUE,
-    mscb VARCHAR NULL,
-    faculty_id VARCHAR NULL,
-    username VARCHAR NULL,
-    learning_position VARCHAR NULL,
-    birth_date TIMESTAMP NULL,
-    gender BOOLEAN NULL,
-    learning VARCHAR NULL,
-    email VARCHAR NULL,
-    phone VARCHAR NULL,
-    ngach VARCHAR NULL,
-    position VARCHAR NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (faculty_id) REFERENCES faculty(faculty_id)
+
+--
+-- Name: faculty; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.faculty (
+    faculty_id character varying NOT NULL,
+    display_name character varying NOT NULL,
+    full_name character varying,
+    is_displayed boolean DEFAULT true NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS criteria (
-    criteria_id VARCHAR(255) DEFAULT uuid_generate_v4() PRIMARY KEY,
-    display_name TEXT NOT NULL,
-    code VARCHAR(255) NOT NULL UNIQUE,
-    index INTEGER,
-    semester_id TEXT,
-    semesters JSONB DEFAULT '[]'::jsonb,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+--
+-- Name: lecturer; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.lecturer (
+    lecturer_id character varying NOT NULL,
+    display_name character varying,
+    mscb character varying,
+    faculty_id character varying,
+    username character varying,
+    learning_position character varying,
+    birth_date timestamp without time zone,
+    gender boolean,
+    learning character varying,
+    email character varying,
+    phone character varying,
+    ngach character varying,
+    "position" character varying
 );
 
-CREATE TABLE IF NOT EXISTS class (
-    class_id VARCHAR(255) DEFAULT uuid_generate_v4() PRIMARY KEY,
-    display_name VARCHAR(255) NOT NULL,
-    semester_id VARCHAR(255) NOT NULL,
-    program TEXT,
-    class_type VARCHAR(50),
-    subject_id VARCHAR(255),
-    lecturer_id VARCHAR(255),
-    total_student INTEGER,
-    participating_student INTEGER,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (semester_id) REFERENCES semester(semester_id),
-    FOREIGN KEY (subject_id) REFERENCES subject(subject_id),
-    FOREIGN KEY (lecturer_id) REFERENCES lecturer(lecturer_id),
-    UNIQUE(display_name, semester_id)
+
+--
+-- Name: permission_entity; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.permission_entity (
+    id integer NOT NULL,
+    user_id character varying NOT NULL,
+    lecture_id character varying NOT NULL,
+    faculty_id character varying NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS point_answer (
-    id SERIAL PRIMARY KEY,
-    max_point INTEGER NOT NULL DEFAULT 4,
-    criteria_id VARCHAR(255) NOT NULL,
-    class_id VARCHAR(255) NOT NULL,
-    point INTEGER NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (criteria_id) REFERENCES criteria(criteria_id),
-    FOREIGN KEY (class_id) REFERENCES class(class_id)
+
+--
+-- Name: permission_entity_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.permission_entity_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: permission_entity_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.permission_entity_id_seq OWNED BY public.permission_entity.id;
+
+
+--
+-- Name: point; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.point (
+    point_id character varying NOT NULL,
+    max_point integer NOT NULL,
+    point double precision NOT NULL,
+    criteria_id character varying NOT NULL,
+    class_id character varying
 );
 
--- Create indexes
-CREATE INDEX IF NOT EXISTS idx_criteria_class ON point_answer(criteria_id, class_id);
 
-CREATE TABLE IF NOT EXISTS point (
-    point_id VARCHAR(255) DEFAULT uuid_generate_v4() PRIMARY KEY,
-    max_point INTEGER NOT NULL DEFAULT 4,
-    criteria_id VARCHAR(255) NOT NULL,
-    class_id VARCHAR(255) NOT NULL,
-    point FLOAT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (criteria_id) REFERENCES criteria(criteria_id),
-    FOREIGN KEY (class_id) REFERENCES class(class_id),
-    UNIQUE(criteria_id, class_id)
+--
+-- Name: semester; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.semester (
+    semester_id character varying NOT NULL,
+    display_name character varying NOT NULL,
+    type character varying NOT NULL,
+    year character varying NOT NULL,
+    search_string character varying NOT NULL
 );
 
--- Create indexes for point table
-CREATE INDEX IF NOT EXISTS idx_point_criteria_class ON point(criteria_id, class_id);
 
-CREATE TABLE IF NOT EXISTS comment (
-    comment_id VARCHAR(255) DEFAULT uuid_generate_v4() PRIMARY KEY,
-    type VARCHAR(20) NOT NULL CHECK (type IN ('positive', 'negative')),
-    content TEXT NOT NULL,
-    class_id VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (class_id) REFERENCES class(class_id)
+--
+-- Name: staff_survey_batch; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.staff_survey_batch (
+    staff_survey_batch_id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    display_name character varying,
+    updated_at timestamp with time zone
 );
 
-CREATE TABLE IF NOT EXISTS user_entity (
+
+--
+-- Name: staff_survey_criteria; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.staff_survey_criteria (
+    staff_survey_criteria_id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    display_name character varying NOT NULL,
+    category character varying NOT NULL,
+    index integer,
+    semesters text[] DEFAULT '{}'::text[] NOT NULL
+);
+
+
+--
+-- Name: staff_survey_point; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.staff_survey_point (
+    staff_survey_point_id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    max_point integer NOT NULL,
+    point integer NOT NULL,
+    comment character varying,
+    staff_survey_criteria_id uuid,
+    staff_survey_sheet_id uuid
+);
+
+
+--
+-- Name: staff_survey_sheet; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.staff_survey_sheet (
+    staff_survey_sheet_id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    working_year character varying,
+    display_name character varying,
+    mscb character varying,
+    birth character varying,
+    gender boolean,
+    faculty character varying,
+    academic_degree character varying,
+    academic_title character varying,
+    additional_comment character varying,
+    staff_survey_batch_id uuid
+);
+
+
+--
+-- Name: subject; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.subject (
+    subject_id character varying NOT NULL,
+    display_name character varying,
+    faculty_id character varying NOT NULL
+);
+
+
+--
+-- Name: user_entity; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_entity (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    role public.user_entity_role_enum NOT NULL,
+    "displayName" character varying DEFAULT ''::character varying,
     username character varying NOT NULL,
     password character varying NOT NULL,
-    "displayName" character varying DEFAULT ''::character varying,
-    id uuid DEFAULT public.uuid_generate_v4() NOT NULL PRIMARY KEY,
-    role public.user_entity_role_enum NOT NULL,
+    "lastAccess" timestamp with time zone DEFAULT '2025-10-02 00:39:27.524+00'::timestamp with time zone,
+    "lastSendEmail" timestamp with time zone DEFAULT '2025-10-02 00:39:27.524+00'::timestamp with time zone,
     "facultyFacultyId" character varying,
-    "lastAccess" timestamp with time zone DEFAULT '2025-07-11 03:12:23.342+00'::timestamp with time zone,
-    "lecturerLecturerId" character varying,
-    "lastSendEmail" timestamp with time zone DEFAULT '2025-07-11 03:12:23.342+00'::timestamp with time zone,
-    FOREIGN KEY ("facultyFacultyId") REFERENCES faculty(faculty_id),
-    FOREIGN KEY ("lecturerLecturerId") REFERENCES lecturer(lecturer_id)
+    "lecturerLecturerId" character varying
 );
 
--- Create indexes
-CREATE INDEX IF NOT EXISTS idx_class_type ON comment(class_id, type);
-CREATE INDEX IF NOT EXISTS idx_semester_search ON semester(search_string);
-CREATE INDEX IF NOT EXISTS idx_class_semester ON class(semester_id);
-CREATE INDEX IF NOT EXISTS idx_subject_faculty ON subject(faculty_id);
+
+--
+-- Name: permission_entity id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.permission_entity ALTER COLUMN id SET DEFAULT nextval('public.permission_entity_id_seq'::regclass);
+
+
+SELECT pg_catalog.setval('public.permission_entity_id_seq', 1, false);
+
+
+--
+-- Name: semester PK_06f44a368424d5968fb2da79e18; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.semester
+    ADD CONSTRAINT "PK_06f44a368424d5968fb2da79e18" PRIMARY KEY (semester_id);
+
+
+--
+-- Name: staff_survey_batch PK_1839f176f895ddcebf8bbb88065; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.staff_survey_batch
+    ADD CONSTRAINT "PK_1839f176f895ddcebf8bbb88065" PRIMARY KEY (staff_survey_batch_id);
+
+
+--
+-- Name: class PK_4265c685fe8a9043bd8d400ad58; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.class
+    ADD CONSTRAINT "PK_4265c685fe8a9043bd8d400ad58" PRIMARY KEY (class_id);
+
+
+--
+-- Name: permission_entity PK_57a5504c7abcb1d2a9c82ae6f48; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.permission_entity
+    ADD CONSTRAINT "PK_57a5504c7abcb1d2a9c82ae6f48" PRIMARY KEY (id);
+
+
+--
+-- Name: comment PK_6a9f9bf1cf9a09107d3224a0e9a; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.comment
+    ADD CONSTRAINT "PK_6a9f9bf1cf9a09107d3224a0e9a" PRIMARY KEY (comment_id);
+
+
+--
+-- Name: subject PK_70fbdd4144f3fc91373a93fe04a; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.subject
+    ADD CONSTRAINT "PK_70fbdd4144f3fc91373a93fe04a" PRIMARY KEY (subject_id);
+
+
+--
+-- Name: faculty PK_8339473e71533d4789bccccca06; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.faculty
+    ADD CONSTRAINT "PK_8339473e71533d4789bccccca06" PRIMARY KEY (faculty_id);
+
+
+--
+-- Name: staff_survey_sheet PK_887aacc835bdcd48576140fd225; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.staff_survey_sheet
+    ADD CONSTRAINT "PK_887aacc835bdcd48576140fd225" PRIMARY KEY (staff_survey_sheet_id);
+
+
+--
+-- Name: criteria PK_affb46f7985a6bec7d3d0f2b0fe; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.criteria
+    ADD CONSTRAINT "PK_affb46f7985a6bec7d3d0f2b0fe" PRIMARY KEY (criteria_id);
+
+
+--
+-- Name: user_entity PK_b54f8ea623b17094db7667d8206; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_entity
+    ADD CONSTRAINT "PK_b54f8ea623b17094db7667d8206" PRIMARY KEY (id);
+
+
+--
+-- Name: lecturer PK_db3ca2d6ec6a1c0c84d283a0a65; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lecturer
+    ADD CONSTRAINT "PK_db3ca2d6ec6a1c0c84d283a0a65" PRIMARY KEY (lecturer_id);
+
+
+--
+-- Name: staff_survey_point PK_dec0bbfc2c04d38a358b4414cda; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.staff_survey_point
+    ADD CONSTRAINT "PK_dec0bbfc2c04d38a358b4414cda" PRIMARY KEY (staff_survey_point_id);
+
+
+--
+-- Name: staff_survey_criteria PK_efa43d5d5bd4811a24677a0eeda; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.staff_survey_criteria
+    ADD CONSTRAINT "PK_efa43d5d5bd4811a24677a0eeda" PRIMARY KEY (staff_survey_criteria_id);
+
+
+--
+-- Name: point PK_f900d38873a4023760b39e9132c; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.point
+    ADD CONSTRAINT "PK_f900d38873a4023760b39e9132c" PRIMARY KEY (point_id);
+
+
+--
+-- Name: staff_survey_criteria UQ_4f43324ccb9784d1a65886746bb; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.staff_survey_criteria
+    ADD CONSTRAINT "UQ_4f43324ccb9784d1a65886746bb" UNIQUE (display_name, category);
+
+
+--
+-- Name: staff_survey_batch UQ_d0cc10edc95b69c09a0f0805f18; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.staff_survey_batch
+    ADD CONSTRAINT "UQ_d0cc10edc95b69c09a0f0805f18" UNIQUE (display_name);
+
+
+--
+-- Name: user_entity FK_0d7e1606d988336ac7c4485b4e3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_entity
+    ADD CONSTRAINT "FK_0d7e1606d988336ac7c4485b4e3" FOREIGN KEY ("facultyFacultyId") REFERENCES public.faculty(faculty_id);
+
+
+--
+-- Name: point FK_154e6c0dea87abee2bd48e244cb; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.point
+    ADD CONSTRAINT "FK_154e6c0dea87abee2bd48e244cb" FOREIGN KEY (criteria_id) REFERENCES public.criteria(criteria_id);
+
+
+--
+-- Name: class FK_2c2897c87a5839e7c6dfb738af3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.class
+    ADD CONSTRAINT "FK_2c2897c87a5839e7c6dfb738af3" FOREIGN KEY (subject_id) REFERENCES public.subject(subject_id);
+
+
+--
+-- Name: staff_survey_sheet FK_2e048981496cf885c2225ce7f55; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.staff_survey_sheet
+    ADD CONSTRAINT "FK_2e048981496cf885c2225ce7f55" FOREIGN KEY (staff_survey_batch_id) REFERENCES public.staff_survey_batch(staff_survey_batch_id);
+
+
+--
+-- Name: criteria FK_2f215cf70be2bf2a47f58e9022c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.criteria
+    ADD CONSTRAINT "FK_2f215cf70be2bf2a47f58e9022c" FOREIGN KEY (semester_id) REFERENCES public.semester(semester_id);
+
+
+--
+-- Name: point FK_308b41e9b0d14fd5da369ee6450; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.point
+    ADD CONSTRAINT "FK_308b41e9b0d14fd5da369ee6450" FOREIGN KEY (class_id) REFERENCES public.class(class_id);
+
+
+--
+-- Name: user_entity FK_321ec983d872275190a317d6b2a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_entity
+    ADD CONSTRAINT "FK_321ec983d872275190a317d6b2a" FOREIGN KEY ("lecturerLecturerId") REFERENCES public.lecturer(lecturer_id);
+
+
+--
+-- Name: staff_survey_point FK_396481a2b4cdf766c9d616eea09; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.staff_survey_point
+    ADD CONSTRAINT "FK_396481a2b4cdf766c9d616eea09" FOREIGN KEY (staff_survey_criteria_id) REFERENCES public.staff_survey_criteria(staff_survey_criteria_id);
+
+
+--
+-- Name: comment FK_57f58603a2274983ccda5825708; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.comment
+    ADD CONSTRAINT "FK_57f58603a2274983ccda5825708" FOREIGN KEY (class_id) REFERENCES public.class(class_id);
+
+
+--
+-- Name: subject FK_5c7c16e41339f8c24e898803831; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.subject
+    ADD CONSTRAINT "FK_5c7c16e41339f8c24e898803831" FOREIGN KEY (faculty_id) REFERENCES public.faculty(faculty_id);
+
+
+--
+-- Name: class FK_726337d5368f4cc1c3d83e1f79f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.class
+    ADD CONSTRAINT "FK_726337d5368f4cc1c3d83e1f79f" FOREIGN KEY (semester_id) REFERENCES public.semester(semester_id);
+
+
+--
+-- Name: lecturer FK_a9fb35131b3d66ecf1fb25c5cd6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lecturer
+    ADD CONSTRAINT "FK_a9fb35131b3d66ecf1fb25c5cd6" FOREIGN KEY (faculty_id) REFERENCES public.faculty(faculty_id);
+
+
+--
+-- Name: class FK_b4b714ce38fee005e3865656974; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.class
+    ADD CONSTRAINT "FK_b4b714ce38fee005e3865656974" FOREIGN KEY (lecturer_id) REFERENCES public.lecturer(lecturer_id);
+ALTER TABLE ONLY public.staff_survey_point
+    ADD CONSTRAINT "FK_f8fa973a34a75a1a0c41ba8f3df" FOREIGN KEY (staff_survey_sheet_id) REFERENCES public.staff_survey_sheet(staff_survey_sheet_id);

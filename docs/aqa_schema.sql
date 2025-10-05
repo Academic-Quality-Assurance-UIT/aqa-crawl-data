@@ -261,7 +261,7 @@ CREATE TABLE public.staff_survey_criteria (
     display_name character varying NOT NULL,
     category character varying NOT NULL,
     index integer,
-    staff_survery_criteria_id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    staff_survey_criteria_id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     semesters text[] DEFAULT '{}'::text[] NOT NULL
 );
 
@@ -274,8 +274,8 @@ CREATE TABLE public.staff_survey_point (
     max_point integer NOT NULL,
     point integer NOT NULL,
     comment character varying,
-    staff_survery_criteria_id uuid,
-    staff_survery_point_id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    staff_survey_criteria_id uuid,
+    staff_survey_point_id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     staff_survey_sheet_id uuid
 );
 
@@ -426,7 +426,7 @@ ALTER TABLE ONLY public.lecturer
 --
 
 ALTER TABLE ONLY public.staff_survey_point
-    ADD CONSTRAINT "PK_dec0bbfc2c04d38a358b4414cda" PRIMARY KEY (staff_survery_point_id);
+    ADD CONSTRAINT "PK_dec0bbfc2c04d38a358b4414cda" PRIMARY KEY (staff_survey_point_id);
 
 
 --
@@ -434,7 +434,7 @@ ALTER TABLE ONLY public.staff_survey_point
 --
 
 ALTER TABLE ONLY public.staff_survey_criteria
-    ADD CONSTRAINT "PK_efa43d5d5bd4811a24677a0eeda" PRIMARY KEY (staff_survery_criteria_id);
+    ADD CONSTRAINT "PK_efa43d5d5bd4811a24677a0eeda" PRIMARY KEY (staff_survey_criteria_id);
 
 
 --
@@ -522,7 +522,7 @@ ALTER TABLE ONLY public.user_entity
 --
 
 ALTER TABLE ONLY public.staff_survey_point
-    ADD CONSTRAINT "FK_396481a2b4cdf766c9d616eea09" FOREIGN KEY (staff_survery_criteria_id) REFERENCES public.staff_survey_criteria(staff_survery_criteria_id);
+    ADD CONSTRAINT "FK_396481a2b4cdf766c9d616eea09" FOREIGN KEY (staff_survey_criteria_id) REFERENCES public.staff_survey_criteria(staff_survey_criteria_id);
 
 
 --

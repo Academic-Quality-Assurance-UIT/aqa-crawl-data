@@ -1,0 +1,58 @@
+[
+  {
+    "title": "Phiếu khảo sát Cán bộ - Giảng viên - Nhân viên về trường ĐH Công nghệ Thông tin năm 2015",
+    "sid": "689698",
+    "type": "CBGV",
+    "semester_type": "HK2",
+    "year": "2015",
+    "semester_name": "HK2, 2015"
+  },
+  {
+    "title": "Phiếu khảo sát Cán bộ - Giảng viên - Nhân viên về trường ĐH Công nghệ Thông tin năm 2016",
+    "sid": "184988",
+    "type": "CBGV",
+    "semester_type": "HK2",
+    "year": "2016",
+    "semester_name": "HK2, 2016"
+  },
+  {
+    "title": "Phiếu khảo sát Cán bộ, Giảng viên, Nhân viên về điều kiện, môi trường làm việc năm 2017",
+    "sid": "771375",
+    "type": "CBGV",
+    "semester_type": "HK2",
+    "year": "2017",
+    "semester_name": "HK2, 2017"
+  },
+  {
+    "title": "Phiếu khảo sát Cán bộ, Giảng viên, Nhân viên về điều kiện, môi trường làm việc năm 2019",
+    "sid": "674594",
+    "type": "CBGV",
+    "semester_type": "HK2",
+    "year": "2019",
+    "semester_name": "HK2, 2019"
+  },
+  {
+    "title": "Phiếu khảo sát mức độ hài lòng của Cán bộ - Giảng viên - Nhân viên năm 2021",
+    "sid": "821342",
+    "type": "CBGV",
+    "semester_type": "HK2",
+    "year": "2021",
+    "semester_name": "HK2, 2021"
+  },
+  {
+    "title": "Phiếu khảo sát mức độ hài lòng của Viên chức - Người lao động năm 2023",
+    "sid": "219379",
+    "type": "CBGV",
+    "semester_type": "HK2",
+    "year": "2023",
+    "semester_name": "HK2, 2023"
+  },
+  {
+    "title": "Phiếu khảo sát mức độ hài lòng của Viên chức, Người lao động năm 2025",
+    "sid": "257993",
+    "type": "CBGV",
+    "semester_type": "HK2",
+    "year": "2025",
+    "semester_name": "HK2, 2025"
+  }
+]
